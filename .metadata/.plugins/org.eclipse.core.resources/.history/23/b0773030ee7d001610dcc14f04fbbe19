@@ -1,0 +1,76 @@
+package com.nullerino.game;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JPanel;
+
+import com.nullerino.gui.Board;
+import com.nullerino.paddle.Paddle;
+
+public class Pong extends JPanel implements Runnable, KeyListener
+{
+
+	private final int TICK_RATE = 128;
+	private final int TICK_RATE_MS = 1000 / TICK_RATE;
+	private boolean running;
+	private boolean paused;
+	private long curTime;
+	private long lastUpdate;
+	private int ticks;
+	private Board board;
+	private Paddle playerPaddle;
+	private Paddle aiPaddle;
+
+	public Pong()
+	{
+		running = true;
+		paused = false;
+		curTime = 0;
+		ticks = 0;
+		lastUpdate = 0;
+		// TODO set up board and paddles
+	}
+
+	public void run()
+	{
+		while (running == true)
+		{
+			if (paused == false)
+			{
+				curTime = System.currentTimeMillis();
+				if ((curTime - lastUpdate) > TICK_RATE_MS)
+				{
+					// update
+					++ticks;
+					System.out
+					    .println("Tick: " + ticks + "\nDiff: " + (curTime - lastUpdate));
+					lastUpdate = System.currentTimeMillis();
+				}
+			}
+		}
+	}
+
+	private void pause()
+	{
+
+	}
+
+	public void keyTyped(KeyEvent e)
+	{
+
+	}
+
+	public void keyPressed(KeyEvent e)
+	{
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+		{
+			pause();
+		}
+	}
+
+	public void keyReleased(KeyEvent e)
+	{
+	}
+
+}

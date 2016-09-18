@@ -1,0 +1,28 @@
+package com.nullerino.gui;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.JPanel;
+
+public class Board extends JPanel implements MouseMotionListener
+{
+
+	public Board()
+	{
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e)
+	{
+		System.out.println("Mouse is: " + e.getX() + ", " + e.getY());
+	}
+
+}

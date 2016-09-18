@@ -1,0 +1,13 @@
+package com.nullerino.paddle;
+
+public class Paddle
+{
+
+	private boolean player;
+
+	public Paddle(boolean isPlayer)
+	{
+		this.player = isPlayer;
+	}
+
+}

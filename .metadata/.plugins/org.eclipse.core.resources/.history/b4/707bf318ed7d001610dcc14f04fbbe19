@@ -1,0 +1,39 @@
+package com.nullerino.game;
+
+import javax.swing.JPanel;
+
+public class Pong extends JPanel implements Runnable
+{
+
+	private boolean running;
+	private final int TICK_RATE = 128;
+	private final int TICK_RATE_MS = 1000 / TICK_RATE;
+	private long curTime;
+	private long lastUpdate;
+	private int ticks;
+
+	public Pong()
+	{
+		running = true;
+		curTime = 0;
+		ticks = 0;
+		lastUpdate = 0;
+		// TODO set up board and paddles
+	}
+
+	public void run()
+	{
+		while (running == true)
+		{
+			curTime = System.currentTimeMillis();
+			if ((curTime - lastUpdate) > TICK_RATE_MS)
+			{
+				// update
+				lastUpdate = System.currentTimeMillis();
+				++ticks;
+				System.out.println("Tick: " + ticks);
+			}
+		}
+	}
+
+}

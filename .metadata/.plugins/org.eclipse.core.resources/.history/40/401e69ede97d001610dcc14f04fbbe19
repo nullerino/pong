@@ -1,0 +1,6 @@
+package com.nullerino.gui;
+
+public class Board extends JPanel
+{
+
+}
