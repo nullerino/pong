@@ -1,0 +1,13 @@
+import javax.swing.JFrame;
+
+public class Frame extends JFrame
+{
+
+	private final int WIDTH = 400;
+	private final int HEIGHT = 400;
+
+	public static void main(String[] args)
+	{
+
+	}
+}
