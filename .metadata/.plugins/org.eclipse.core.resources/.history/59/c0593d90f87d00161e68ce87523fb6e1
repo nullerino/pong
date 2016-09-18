@@ -1,0 +1,8 @@
+package com.nullerino.gui;
+
+import javax.swing.JPanel;
+
+public class Menu extends JPanel
+{
+
+}

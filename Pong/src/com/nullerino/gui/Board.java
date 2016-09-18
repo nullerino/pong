@@ -1,35 +1,28 @@
 package com.nullerino.gui;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-
 import javax.swing.JPanel;
 
-public class Board extends JPanel implements MouseMotionListener
+import com.nullerino.paddle.Paddle;
+
+public class Board extends JPanel
 {
 
-	private int mouseX;
-	private int mouseY;
-	
-	public Board()
+	private Paddle playerPaddle;
+	private Paddle aiPaddle;
+	private int gameWidth;
+	private int gameHeight;
+
+	public Board(int gameWidth, int gameHeight)
 	{
-		this.mouseX = 0;
-		this.mouseY = 0;
-		this.addMouseMotionListener(this);
+		this.gameWidth = gameWidth;
+		this.gameHeight = gameHeight;
+		playerPaddle = new Paddle(true, gameWidth, gameHeight);
+		aiPaddle = new Paddle(false, gameWidth, gameHeight);
 	}
 
-	@Override
-	public void mouseDragged(MouseEvent e)
+	public Paddle getPlayerPaddle()
 	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e)
-	{
-		mouseX = e.getX();
-		mouseY = e.getY();
+		return playerPaddle;
 	}
 
 }

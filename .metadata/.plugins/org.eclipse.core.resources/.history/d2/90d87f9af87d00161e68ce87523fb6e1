@@ -1,0 +1,15 @@
+package com.nullerino.gui;
+
+import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
+
+public class Menu extends JPanel implements ActionListener
+{
+
+	public Menu()
+	{
+		
+	}
+	
+}
