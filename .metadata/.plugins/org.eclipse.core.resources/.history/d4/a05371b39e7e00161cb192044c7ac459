@@ -1,0 +1,29 @@
+package com.nullerino.pong.game;
+
+import java.util.Random;
+
+public class Pong
+{
+
+	private int[] pixels;
+
+	public Pong(int width, int height)
+	{
+		pixels = new int[width * height];
+	}
+
+	public void tick()
+	{
+
+	}
+
+	public void render()
+	{
+		Random random = new Random();
+		for(int ii = 0; ii < pixels.length; ++ii)
+		{
+			pixels[ii] = random.nextInt()
+		}
+	}
+
+}

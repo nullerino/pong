@@ -1,0 +1,45 @@
+package com.nullerino.pong.game;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.Random;
+
+import javax.swing.JPanel;
+
+public class Pong extends JPanel
+{
+
+	private int[][]		pixels;
+	private Graphics	g;
+
+	public Pong(int width, int height)
+	{
+		pixels = new int[width][height];
+	}
+
+	public void tick()
+	{
+
+	}
+
+	public void render()
+	{
+		Random random = new Random();
+		for (int ii = 0; ii < WIDTH; ++ii)
+		{
+			for (int jj = 0; jj < HEIGHT; ++jj)
+			{
+				pixels[ii][jj] = random.nextInt();
+			}
+		}
+		this.repaint();
+	}
+
+	@Override
+	public void paintComponent(Graphics g)
+	{
+		super.paintComponent(g);
+		g.drawRect(0, 0, 100, 100);
+	}
+
+}

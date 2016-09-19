@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import com.nullerino.pong.game.Pong;
+
 public class PongWindow extends JFrame implements Runnable
 {
 
@@ -16,7 +18,7 @@ public class PongWindow extends JFrame implements Runnable
 	private boolean							running;
 	private Thread							gameThread;
 
-	private Screen							screen;
+	private Pong								game;
 
 	public PongWindow()
 	{
@@ -25,7 +27,8 @@ public class PongWindow extends JFrame implements Runnable
 		this.setPreferredSize(size);
 		this.setMinimumSize(size);
 		this.setMaximumSize(size);
-		screen = new Screen(WIDTH, HEIGHT);
+		game = new Pong(WIDTH, HEIGHT);
+		this.add(game);
 	}
 
 	public synchronized void start()
@@ -68,19 +71,20 @@ public class PongWindow extends JFrame implements Runnable
 	@Override
 	public void run()
 	{
+		long lastTime = System.currentTimeMillis();
+		int frames = 0;
 		while (running == true)
 		{
-			tick();
-			render();
+			game.tick();
+			game.render();
+			frames++;
+			while (System.currentTimeMillis() - lastTime > 1000)
+			{
+				System.out.println(frames + " fps");
+				lastTime += 1000;
+				frames = 0;
+			}
 		}
-	}
-
-	private void tick()
-	{
-	}
-
-	private void render()
-	{
 	}
 
 }

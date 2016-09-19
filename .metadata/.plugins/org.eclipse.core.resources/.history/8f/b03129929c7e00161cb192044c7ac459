@@ -1,0 +1,28 @@
+package com.nullerino.pong.gui;
+
+import com.nullerino.pong.game.Pong;
+
+public class Screen
+{
+
+	private final int		WIDTH;
+	private final int		HEIGHT;
+	private final int[]	pixels;
+
+	public Screen(int WIDTH, int HEIGHT)
+	{
+		this.WIDTH = WIDTH;
+		this.HEIGHT = HEIGHT;
+		this.pixels = new int[WIDTH * HEIGHT];
+	}
+
+	public void draw(int x, int y)
+	{
+
+	}
+
+	public void render(Pong game)
+	{
+
+	}
+}

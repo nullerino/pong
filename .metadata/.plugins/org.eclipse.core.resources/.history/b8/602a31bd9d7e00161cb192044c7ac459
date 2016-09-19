@@ -1,0 +1,16 @@
+package com.nullerino.pong.game;
+
+public class Pong
+{
+
+	public Pong()
+ 	{
+		
+	}
+	
+	public void tick()
+	{
+		
+	}
+
+}

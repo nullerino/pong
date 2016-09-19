@@ -1,0 +1,22 @@
+package com.nullerino.pong.game;
+
+public class Pong
+{
+
+	public Pong()
+ 	{
+		
+	}
+	
+	public void tick()
+	{
+		
+	}
+
+	public void render()
+	{
+		Random random = new Random();
+		
+	}
+
+}
