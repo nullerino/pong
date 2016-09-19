@@ -1,0 +1,68 @@
+package com.nullerino.pong.gui;
+
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
+public class PongWindow extends JFrame implements Runnable
+{
+
+	private static final int	WIDTH		= 600;
+	private static final int	HEIGHT	= WIDTH * (4 / 3);
+
+	private boolean						running;
+	private Thread						gameThread;
+
+	public PongWindow()
+	{
+		Dimension size = new Dimension(WIDTH, HEIGHT);
+		this.setPreferredSize(size);
+		this.setMinimumSize(size);
+		this.setMaximumSize(size);
+	}
+
+	public void start()
+	{
+		if (running == true)
+		{
+			running = true;
+			gameThread = new Thread(this);
+			gameThread.start();
+		}
+	}
+
+	public void stop()
+	{
+		if (running == true)
+		{
+			running = false;
+			try
+			{
+				gameThread.join();
+			}
+			catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void main(String[] args)
+	{
+		PongWindow window = new PongWindow();
+		window.pack();
+		window.setResizable(false);
+		window.setLocationRelativeTo(null);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setVisible(true);
+	}
+
+	@Override
+	public void run()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+}

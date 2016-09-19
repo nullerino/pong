@@ -1,0 +1,9 @@
+package com.nullerino.pong.gui;
+
+public class Screen
+{
+	public Screen()
+	{
+
+	}
+}
