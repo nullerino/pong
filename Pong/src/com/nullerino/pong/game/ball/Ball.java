@@ -1,14 +1,17 @@
 package com.nullerino.pong.game.ball;
 
+import java.util.Random;
+
 public class Ball
 {
 
 	private int ballX;
 	private int ballY;
-	private double angle;
+	private int dx = -8;
+	private int dy = -3;
+	private double angleInRads;
 	private final int WIDTH;
 	private final int HEIGHT;
-	private static final int delta = 10;
 	private static final int ballRad = 20;
 
 	/**
@@ -19,7 +22,7 @@ public class Ball
 	{
 		this.HEIGHT = height - 30;
 		this.WIDTH = width - 8;
-		angle = 10;
+		angleInRads = Math.PI / 3;
 
 		ballX = width / 2;
 		ballY = height / 2;
@@ -49,6 +52,24 @@ public class Ball
 		return ballY;
 	}
 
+	public void reset()
+	{
+		ballX = WIDTH / 2;
+		ballY = HEIGHT / 2;
+
+		if (dx > 0)
+		{
+			dx *= -1;
+		}
+		if (dy > 0)
+		{
+			dy *= -1;
+		}
+
+		Random random = new Random();
+		angleInRads = ((Math.PI / 3) * random.nextDouble()) + (Math.PI / 2);
+	}
+
 	/**
 	 * @param ballY
 	 */
@@ -68,31 +89,50 @@ public class Ball
 	/**
 	 * @return the angle
 	 */
-	public double getAngle()
+	public double getAngleInRads()
 	{
-		return angle;
+		return angleInRads;
 	}
 
 	/**
 	 * @param angle
 	 *          the angle to set
 	 */
-	/**
-	 * @param angle
-	 */
-	public void setAngle(double angle)
+	public void setAngleInRads(double angleInRads)
 	{
-		this.angle = angle;
+		this.angleInRads = angleInRads;
 	}
 
-	/**
-	 * @return the delta
-	 */
-	/**
-	 * @return
-	 */
-	public static int getDelta()
+	public void deflect()
 	{
-		return delta;
+		dx *= -1;
+	}
+
+	public void update()
+	{
+		ballX += dx * Math.sin(angleInRads);
+		ballY += dy * Math.cos(angleInRads);
+
+		if (ballX <= 0)
+		{
+			ballX = 0;
+			dx *= -1;
+		}
+		else if (ballX >= WIDTH)
+		{
+			ballX = WIDTH;
+			dx *= -1;
+		}
+
+		if (ballY <= 0)
+		{
+			ballY = 0;
+			dy *= -1;
+		}
+		else if (ballY >= HEIGHT)
+		{
+			ballY = HEIGHT;
+			dy *= -1;
+		}
 	}
 }

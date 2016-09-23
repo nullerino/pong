@@ -42,7 +42,6 @@ public class Paddle
 
 	public void setyPos(int yPos)
 	{
-		// TODO checking
 		if ((yPos - (paddleHeight / 2)) < 0)
 		{
 			this.yPos = 0;
