@@ -9,16 +9,16 @@ import com.nullerino.pong.game.Pong;
 public class PongWindow extends JFrame implements Runnable
 {
 
-	private static final int		WIDTH					= 1280;
-	private static final int		HEIGHT				= (WIDTH / 16) * 9;
+	private static final int WIDTH = 1280;
+	private static final int HEIGHT = (WIDTH / 16) * 9;
 
-	private static final String	GAME_NAME			= "Pong - nullerino";
-	private static final String	GAME_VERSION	= "0.0.0";
+	private static final String GAME_NAME = "Pong - nullerino";
+	private static final String GAME_VERSION = "0.0.0";
 
-	private boolean							running;
-	private Thread							gameThread;
+	private boolean running;
+	private Thread gameThread;
 
-	private Pong								game;
+	private Pong game;
 
 	public PongWindow()
 	{
@@ -71,19 +71,10 @@ public class PongWindow extends JFrame implements Runnable
 	@Override
 	public void run()
 	{
-		long lastTime = System.currentTimeMillis();
-		int frames = 0;
 		while (running == true)
 		{
 			game.tick();
 			game.render();
-			frames++;
-			while (System.currentTimeMillis() - lastTime > 1000)
-			{
-				System.out.println(frames + " fps");
-				lastTime += 1000;
-				frames = 0;
-			}
 		}
 	}
 

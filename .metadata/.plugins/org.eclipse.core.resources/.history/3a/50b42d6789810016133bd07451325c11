@@ -1,0 +1,6 @@
+package com.nullerino.pong.game.ball;
+
+public class Ball
+{
+
+}

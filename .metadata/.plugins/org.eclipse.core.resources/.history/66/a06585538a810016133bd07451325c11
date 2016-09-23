@@ -1,0 +1,45 @@
+package com.nullerino.pong.game.paddle;
+
+public class Paddle
+{
+
+	private int				xPos;
+	private int				yPos;
+	private int				side;
+	private int[]			bounds;
+	private final int	HEIGHT;
+	private final int	WIDTH;
+	private final int	GAP	= 40;
+
+	public Paddle(int width, int height, boolean leftSide)
+	{
+		this.HEIGHT = height;
+		this.WIDTH = width;
+		if (leftSide == true)
+		{
+			xPos = 0 + GAP;
+		}
+		else
+		{
+			xPos = WIDTH - GAP;
+		}
+		
+		yPos = HEIGHT / 2;
+	}
+
+	public int getyPos()
+	{
+		return yPos;
+	}
+
+	public void setyPos(int yPos)
+	{
+		this.yPos = yPos;
+	}
+
+	public int[] getBounds()
+	{
+		return bounds;
+	}
+
+}

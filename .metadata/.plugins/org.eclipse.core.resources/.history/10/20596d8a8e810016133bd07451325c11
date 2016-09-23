@@ -1,0 +1,14 @@
+package com.nullerino.pong.game.ball;
+
+public class Ball
+{
+
+	private int ballX;
+	private int ballY;
+	private static final int delta = 10;
+	
+	public Ball()
+	{
+		// TODO Auto-generated constructor stub
+	}
+}
