@@ -2,12 +2,16 @@ package com.nullerino.pong.game.ball;
 
 import java.util.Random;
 
+/**
+ * @author Dan
+ *
+ */
 public class Ball
 {
 
 	private int ballX;
 	private int ballY;
-	private int dx = -8;
+	private int dx = -3;
 	private int dy = -3;
 	private double angleInRads;
 	private final int WIDTH;
@@ -52,6 +56,9 @@ public class Ball
 		return ballY;
 	}
 
+	/**
+	 * 
+	 */
 	public void reset()
 	{
 		ballX = WIDTH / 2;

@@ -8,8 +8,8 @@ public class Paddle
 	private int score;
 	private final int HEIGHT;
 	private final int WIDTH;
-	private static final int GAP = 40;
-	private static final int paddleWidth = 25;
+	private static final int GAP = 200;
+	private static final int paddleWidth = 20;
 	private static final int paddleHeight = 100;
 
 	public Paddle(int width, int height, boolean leftSide)

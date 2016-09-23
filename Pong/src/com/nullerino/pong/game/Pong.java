@@ -9,8 +9,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.nullerino.pong.game.ai.AI;
 import com.nullerino.pong.game.ball.Ball;
 import com.nullerino.pong.game.paddle.Paddle;
 import com.nullerino.pong.gui.PongWindow;
@@ -18,7 +20,7 @@ import com.nullerino.pong.gui.PongWindow;
 public class Pong extends JPanel implements KeyListener, MouseMotionListener
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int WIDTH;
 	private int HEIGHT;
 	private int mouseX;
@@ -27,12 +29,13 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener
 	private JLabel scoresLabel;
 	private Paddle playerPaddle;
 	private Paddle aiPaddle;
+	private AI ai;
 	private Ball ball;
 	private int ticks;
 	private int fps;
 	long lastTime;
 	private final PongWindow window;
-	private static final int pointsToWin = 3;
+	private static final int pointsToWin = 99999;
 
 	/**
 	 * @param width
@@ -51,6 +54,7 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener
 		fps = 0;
 		playerPaddle = new Paddle(this.WIDTH, this.HEIGHT, true);
 		aiPaddle = new Paddle(this.WIDTH, this.HEIGHT, false);
+		ai = new AI(aiPaddle);
 		ball = new Ball(this.WIDTH, this.HEIGHT);
 		lastTime = System.currentTimeMillis();
 	}
@@ -65,9 +69,15 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener
 		if (ticks % 128000 == 0)
 		{
 			ball.update();
+			ai.play(generateXFinalPos());
 			checkForCollision();
 			checkForPointScored();
 		}
+	}
+
+	private int generateXFinalPos()
+	{
+		return 0;
 	}
 
 	private void checkForCollision()
@@ -78,6 +88,7 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener
 			if (ball.getBallX() < (playerPaddle.getxPos() + Paddle.getPaddleWidth()))
 			{
 				ball.deflect();
+				ball.setBallX(playerPaddle.getxPos() + Paddle.getPaddleWidth());
 			}
 		}
 		else if (ball.getBallY() > aiPaddle.getyPos()
@@ -86,6 +97,7 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener
 			if (ball.getBallX() > (aiPaddle.getxPos() - Paddle.getPaddleWidth()))
 			{
 				ball.deflect();
+				ball.setBallX(aiPaddle.getxPos() - Paddle.getPaddleWidth());
 			}
 		}
 
@@ -109,7 +121,8 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener
 		if (playerPaddle.getScore() == pointsToWin
 		    || aiPaddle.getScore() == pointsToWin)
 		{
-			window.stop();
+			JOptionPane.showMessageDialog(this, "Winner!");
+			System.exit(0);
 		}
 	}
 
@@ -146,7 +159,7 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener
 	private void updatePaddles(Graphics2D g2d)
 	{
 		g2d.setColor(Color.RED);
-		
+
 		g2d.fillRect(playerPaddle.getxPos(), playerPaddle.getyPos(),
 		    Paddle.getPaddleWidth(), Paddle.getPaddleHeight());
 
@@ -161,7 +174,7 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener
 	private void updateBall(Graphics2D g2d)
 	{
 		g2d.setColor(Color.BLACK);
-		g2d.fillOval(ball.getBallX(), ball.getBallY(), Ball.getBallRad(),
+		g2d.fillRect(ball.getBallX(), ball.getBallY(), Ball.getBallRad(),
 		    Ball.getBallRad());
 	}
 
