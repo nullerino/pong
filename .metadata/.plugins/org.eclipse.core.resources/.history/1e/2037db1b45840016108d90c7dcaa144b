@@ -117,7 +117,6 @@ public class Pong extends JPanel
 				ball.setBallX(aiPaddle.getxPos() - Ball.getBallRad());
 			}
 		}
-
 	}
 
 	private void checkForPointScored()
@@ -139,7 +138,11 @@ public class Pong extends JPanel
 		    || aiPaddle.getScore() == pointsToWin)
 		{
 			JOptionPane.showMessageDialog(this, "Winner!");
-			System.exit(0);
+			playerPaddle.setScore(0);
+			aiPaddle.setScore(0);
+			ball.reset();
+			playerPaddle.reset();
+			aiPaddle.reset();
 		}
 	}
 
@@ -148,14 +151,17 @@ public class Pong extends JPanel
 	 */
 	public void render()
 	{
-		this.repaint();
-		while (System.currentTimeMillis() - lastTime > 1000)
+		if (frames < 60)
 		{
-			lastTime += 1000;
-			fps = frames;
-			System.out.println(fps);
-			frames = 0;
+			this.repaint();
 		}
+			while (System.currentTimeMillis() - lastTime > 1000)
+			{
+				lastTime += 1000;
+				fps = frames;
+				System.out.println(fps);
+				frames = 0;
+			}
 	}
 
 	/**
@@ -170,7 +176,11 @@ public class Pong extends JPanel
 		updatePaddles(g2d);
 		updateBall(g2d);
 		updateScoresLabel(g2d);
-		drawDebug(g2d);
+		if (displayDebug == true)
+		{
+			drawDebug(g2d);
+		}
+
 		if (paused == true)
 		{
 			String pausedStr = "PAUSED...";
@@ -186,15 +196,26 @@ public class Pong extends JPanel
 
 	private void drawDebug(Graphics2D g2d)
 	{
-		if (displayDebug == true)
+		String[] debugInfo = {
+		    Integer.toString(fps) + " FPS",
+		    "Player y (top): " + playerPaddle.getyPos(),
+		    "Player y (bottom): "
+		        + (playerPaddle.getyPos() + Paddle.getPaddleHeight()),
+		    "AI y (top): " + aiPaddle.getyPos(),
+		    "AI y (bottom): " + (aiPaddle.getyPos() + Paddle.getPaddleHeight()),
+		    "AI delta: " + AI.getDelta(),
+		    "Ball x: " + ball.getBallX(),
+		    "Ball y: " + ball.getBallY(),
+		    "Ball ang (degs): " + ball.getAngleInRads() * (180 / Math.PI),
+		    "Ball ang (rads): " + ball.getAngleInRads()
+		};
+		Font font = new Font("Stencil Regular", Font.BOLD, 12);
+		FontMetrics metrics = g2d.getFontMetrics(font);
+		int y = metrics.getHeight();
+		g2d.setFont(font);
+		for (int ii = 0; ii < debugInfo.length; ++ii)
 		{
-			String[] debugInfo = { Integer.toString(fps) + " FPS", "Player: " + playerPaddle.getxPos() + ", " + playerPaddle.getyPos() };
-			String fpsStr = Integer.toString(fps) + " FPS";
-			Font font = new Font("Stencil Regular", Font.BOLD, 12);
-			FontMetrics metrics = g2d.getFontMetrics(font);
-			int y = metrics.getHeight();
-			g2d.setFont(font);
-			g2d.drawString(fpsStr, 10, (y / 2));
+			g2d.drawString(debugInfo[ii], 0, ((ii + 1) * y));
 		}
 	}
 
@@ -267,7 +288,19 @@ public class Pong extends JPanel
 			paused ^= true;
 			break;
 		case KeyEvent.VK_F3:
-			displayDebug ^= true;
+			if (paused == false)
+			{
+				displayDebug ^= true;
+			}
+			break;
+		case KeyEvent.VK_R:
+			if (paused == false)
+			{
+				ball.reset();
+			}
+			break;
+		case KeyEvent.VK_W:
+			playerPaddle.setScore(pointsToWin);
 			break;
 		}
 	}
