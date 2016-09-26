@@ -25,4 +25,9 @@ public class AI
 			paddle.setyPos((paddle.getyPos() + delta) + (Paddle.getPaddleHeight() / 2));
 		}
 	}
+	
+	public static int getDelta()
+	{
+		return delta;
+	}
 }

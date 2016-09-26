@@ -10,7 +10,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,7 +24,8 @@ import com.nullerino.pong.game.ball.Ball;
 import com.nullerino.pong.game.paddle.Paddle;
 import com.nullerino.pong.gui.PongWindow;
 
-public class Pong extends JPanel implements KeyListener, MouseMotionListener, MouseListener
+public class Pong extends JPanel
+    implements KeyListener, MouseMotionListener, MouseListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +43,8 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener, Mo
 	private int frames;
 	private int fps;
 	private boolean paused;
+	private boolean backgroundDrawn;
+	private boolean displayDebug;
 	long lastTime;
 	private final PongWindow window;
 	private static final int pointsToWin = 99999;
@@ -66,6 +73,8 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener, Mo
 		paused = false;
 		this.setFocusable(true);
 		this.requestFocus();
+		backgroundDrawn = false;
+		displayDebug = false;
 	}
 
 	/**
@@ -108,7 +117,6 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener, Mo
 				ball.setBallX(aiPaddle.getxPos() - Ball.getBallRad());
 			}
 		}
-
 	}
 
 	private void checkForPointScored()
@@ -130,7 +138,11 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener, Mo
 		    || aiPaddle.getScore() == pointsToWin)
 		{
 			JOptionPane.showMessageDialog(this, "Winner!");
-			System.exit(0);
+			playerPaddle.setScore(0);
+			aiPaddle.setScore(0);
+			ball.reset();
+			playerPaddle.reset();
+			aiPaddle.reset();
 		}
 	}
 
@@ -139,14 +151,14 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener, Mo
 	 */
 	public void render()
 	{
-		frames++;
+		this.repaint();
 		while (System.currentTimeMillis() - lastTime > 1000)
 		{
 			lastTime += 1000;
 			fps = frames;
+			System.out.println(fps);
 			frames = 0;
 		}
-		this.repaint();
 	}
 
 	/**
@@ -157,9 +169,15 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener, Mo
 	{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.setBackground(null);
 		updatePaddles(g2d);
 		updateBall(g2d);
 		updateScoresLabel(g2d);
+		if (displayDebug == true)
+		{
+			drawDebug(g2d);
+		}
+
 		if (paused == true)
 		{
 			String pausedStr = "PAUSED...";
@@ -170,6 +188,47 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener, Mo
 			g2d.setFont(font);
 			g2d.drawString(pausedStr, (WIDTH / 2) - (x / 2), (HEIGHT / 2) - (y / 2));
 		}
+		frames++;
+	}
+
+	private void drawDebug(Graphics2D g2d)
+	{
+		String[] debugInfo = {
+		    Integer.toString(fps) + " FPS",
+		    "Player y (top): " + playerPaddle.getyPos(),
+		    "Player y (bottom): "
+		        + (playerPaddle.getyPos() + Paddle.getPaddleHeight()),
+		    "AI y (top): " + aiPaddle.getyPos(),
+		    "AI y (bottom): " + (aiPaddle.getyPos() + Paddle.getPaddleHeight()),
+		    "AI delta: " + AI.getDelta(),
+		    "Ball x: " + ball.getBallX(),
+		    "Ball y: " + ball.getBallY(),
+		    "Ball ang (degs): " + ball.getAngleInRads() * (180 / Math.PI),
+		    "Ball ang (rads): " + ball.getAngleInRads()
+		};
+		Font font = new Font("Stencil Regular", Font.BOLD, 12);
+		FontMetrics metrics = g2d.getFontMetrics(font);
+		int y = metrics.getHeight();
+		g2d.setFont(font);
+		for (int ii = 0; ii < debugInfo.length; ++ii)
+		{
+			g2d.drawString(debugInfo[ii], 0, ((ii + 1) * y));
+		}
+	}
+
+	private void drawBackground(Graphics2D g2d)
+	{
+		BufferedImage img = null;
+		try
+		{
+			img = ImageIO.read(new File("res/bg.jpg"));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		g2d.drawImage(img, 0, 0, null);
+		backgroundDrawn = true;
 	}
 
 	/**
@@ -225,6 +284,21 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener, Mo
 		case KeyEvent.VK_ESCAPE:
 			paused ^= true;
 			break;
+		case KeyEvent.VK_F3:
+			if (paused == false)
+			{
+				displayDebug ^= true;
+			}
+			break;
+		case KeyEvent.VK_R:
+			if (paused == false)
+			{
+				ball.reset();
+			}
+			break;
+		case KeyEvent.VK_W:
+			playerPaddle.setScore(pointsToWin);
+			break;
 		}
 	}
 
@@ -259,31 +333,30 @@ public class Pong extends JPanel implements KeyListener, MouseMotionListener, Mo
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		System.out.println(e.getClickCount());
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e)
 	{
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e)
 	{
-		
+
 	}
 
 }

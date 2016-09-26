@@ -128,9 +128,9 @@ public class Ball
 			ballX = 0;
 			dx *= -1;
 		}
-		else if (ballX >= WIDTH)
+		else if ((ballX + ballRad) >= WIDTH)
 		{
-			ballX = WIDTH;
+			ballX = WIDTH - ballRad;
 			dx *= -1;
 		}
 
@@ -139,9 +139,9 @@ public class Ball
 			ballY = 0;
 			dy *= -1;
 		}
-		else if (ballY >= HEIGHT)
+		else if ((ballY + ballRad) >= HEIGHT)
 		{
-			ballY = HEIGHT;
+			ballY = HEIGHT - ballRad;
 			dy *= -1;
 		}
 	}
