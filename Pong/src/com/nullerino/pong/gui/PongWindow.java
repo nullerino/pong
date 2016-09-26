@@ -13,7 +13,7 @@ public class PongWindow extends JFrame implements Runnable
 	private static final int HEIGHT = (WIDTH / 16) * 9;
 
 	private static final String GAME_NAME = "Pong - nullerino";
-	private static final String GAME_VERSION = "0.1.0";
+	private static final String GAME_VERSION = "1.0.0";
 
 	private boolean running;
 	private Thread gameThread;

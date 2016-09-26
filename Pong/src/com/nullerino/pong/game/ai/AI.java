@@ -15,14 +15,14 @@ public class AI
 
 	public void play(int ballYFinalPos)
 	{
+		ballYFinalPos -= Paddle.getPaddleHeight() / 2;
 		if (ballYFinalPos < paddle.getyPos())
 		{
-
+			paddle.setyPos((paddle.getyPos() - delta) + (Paddle.getPaddleHeight() / 2));
 		}
 		else if (ballYFinalPos > paddle.getyPos())
 		{
-
+			paddle.setyPos((paddle.getyPos() + delta) + (Paddle.getPaddleHeight() / 2));
 		}
 	}
-
 }

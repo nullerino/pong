@@ -11,8 +11,8 @@ public class Ball
 
 	private int ballX;
 	private int ballY;
-	private int dx = -3;
-	private int dy = -3;
+	private int dx = -5;
+	private int dy = -5;
 	private double angleInRads;
 	private final int WIDTH;
 	private final int HEIGHT;
@@ -27,7 +27,6 @@ public class Ball
 		this.HEIGHT = height - 30;
 		this.WIDTH = width - 8;
 		angleInRads = Math.PI / 3;
-
 		ballX = width / 2;
 		ballY = height / 2;
 	}
@@ -75,6 +74,10 @@ public class Ball
 
 		Random random = new Random();
 		angleInRads = ((Math.PI / 3) * random.nextDouble()) + (Math.PI / 2);
+		while (angleInRads == (Math.PI / 2))
+		{
+			angleInRads = ((Math.PI / 3) * random.nextDouble()) + (Math.PI / 2);
+		}
 	}
 
 	/**

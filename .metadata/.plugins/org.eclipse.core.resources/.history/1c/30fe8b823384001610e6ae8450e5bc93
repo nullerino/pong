@@ -1,0 +1,35 @@
+package com.nullerino.pong.game.ai;
+
+import com.nullerino.pong.game.paddle.Paddle;
+
+public class AI
+{
+
+	private Paddle paddle;
+	private static final int delta = 2;
+
+	public AI(Paddle paddle)
+	{
+		this.paddle = paddle;
+	}
+
+	public void play(int ballYFinalPos)
+	{
+		ballYFinalPos -= Paddle.getPaddleHeight() / 2
+		System.out.println("trying to set AI paddle to: " + ballYFinalPos);
+		System.out.println("current pos: " + paddle.getyPos());
+		if (ballYFinalPos < paddle.getyPos())
+		{
+			System.out.println("attempting to set pos to: " + (paddle.getyPos() - delta));
+			paddle.setyPos((paddle.getyPos() - delta) + (Paddle.getPaddleHeight() / 2));
+			System.out.println("current pos: " + paddle.getyPos());
+		}
+		else if (ballYFinalPos > paddle.getyPos())
+		{
+			System.out.println("attempting to set pos to: " + (paddle.getyPos() + delta));
+			paddle.setyPos((paddle.getyPos() + delta) + (Paddle.getPaddleHeight() / 2));
+			System.out.println("current pos: " + paddle.getyPos());
+		}
+	}
+
+}
